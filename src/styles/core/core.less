@@ -1,0 +1,19 @@
+@import "mixins";
+
+@import "icons";
+
+/* RESET */
+.reset { border:none; background:none; margin:0; padding:0; }
+.reset > li {
+	.reset(); // () musí být, jinak se pokazí selektor s before!
+	position:static;
+
+	&:before { display:none; position:static; top:auto; width:auto; height:auto; margin:0; border-radius:0; background:none; }
+}
+
+/* TYPO */
+a {
+	color:@color-link; .transition(color 300ms ease);
+
+	&:hover, &:focus { color:@color-link-hover; }
+}

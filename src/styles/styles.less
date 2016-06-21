@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+// FONT FACE
+@font-face {
+	font-family:'responsiviewer';
+	src:url('../webfonts/responsiviewer.eot');
+	src:url('../webfonts/responsiviewer.eot?#iefix') format('embedded-opentype'),
+		url('../webfonts/responsiviewer.woff') format('woff'),
+		url('../webfonts/responsiviewer.ttf') format('truetype');
+	font-weight:normal;
+	font-style:normal;
+}
+
+@font-icons:'responsiviewer';
+@font-default: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+@font-base-size:16; // základní velikost písma
+@line-height:1.625;
+
+// MEDIA QUERIES
+@w480:~'(min-width: 480px)';
+@w590:~'(min-width: 590px)';
+@w768:~'(min-width: 768px)';
+@w960:~'(min-width: 960px)';
+@w880:~'(min-width: 880px)';
+@w1200:~'(min-width: 1200px)';
+@w1390:~'(min-width: 1390px)';
+@layout-max:~'(min-width: 1296px)'; // 1280+16 scrollbar
+
+@w480-max:~'(max-width: 479px)';
+@w590-max:~'(max-width: 589px)';
+@w768-max:~'(max-width: 767px)';
+@w880-max:~'(max-width: 879px)';
+@w960-max:~'(max-width: 959px)';
+
+@dh400:~'(min-device-height: 400px)';
+
+@retina:~'(-webkit-min-device-pixel-ratio:1.5), (min-device-pixel-ratio:1.5), (min-resolution: 144dpi)';
+
+// COLORS
+@color-default:#666;
+@color-link:@color-blue;
+@color-link-hover:#000;
+@color-heading:@color-grey-dk;
+
+@color-blue:#5c76bf;
+@color-grey-dk:#414141;
+
+// IMPORT
+@import (inline) "normalize.css";
+
+@import "core/core";
+@import "form/form";
+
+@import "toolbar";
+@import "webpreview";

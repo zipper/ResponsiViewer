@@ -1,0 +1,31 @@
+// ico
+//.ico-sprite { display:inline-block; vertical-align:middle; background:@icoAll -1000px -1000px no-repeat; .retina; content:""; }
+.ico-font {
+	display:inline-block; vertical-align:baseline; content:""; font-family:@font-icons; line-height:1;
+
+	font-style:normal !important;
+	font-weight:normal !important;
+	font-variant:normal !important;
+	text-transform:none !important;
+	text-decoration:none !important;
+
+	speak:none;
+
+	//text-rendering:optimizeLegibility;
+	-webkit-font-smoothing:antialiased;
+	-moz-font-feature-settings:"liga=1";
+	-moz-font-feature-settings:"liga";
+	-ms-font-feature-settings:"liga" 1;
+	-o-font-feature-settings:"liga";
+	font-feature-settings:"liga";
+}
+
+.ico-desktop   { &:before { .ico-font; content:"a"; }}
+.ico-laptop    { &:before { .ico-font; content:"d"; }}
+.ico-phone,
+.ico-phone-landscape { &:before { .ico-font; content:"b"; }}
+.ico-tablet,
+.ico-tablet-landscape { &:before { .ico-font; content:"c"; }}
+
+.ico-phone-landscape,
+.ico-tablet-landscape { &:before { .transform(~'rotate(90deg) scaleX(-1)'); }}
