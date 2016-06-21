@@ -40,9 +40,6 @@ $(function () {
 		var availableWidth = $webpreview.width();
 		var availableHeight = $webpreview.height();
 
-		console.log(availableWidth / width);
-		console.log(availableHeight / height);
-
 		zoom = Math.min(availableWidth / width, availableHeight / height, 1);
 
 		if (zoom < 1 && (width === null || height === null)) {
@@ -113,8 +110,10 @@ $(function () {
 	var $iframe = $webpreview.find('> iframe');
 
 	var $toolbar = $('#toolbar');
-	var $li = $toolbar.find('li');
 	var $device = $toolbar.find(':radio');
+
+	var $width = $('#width');
+	var $height = $('#height');
 
 	var scrollbarWidth = getScrollBarWidth();
 	var preserveHeight = true;
@@ -124,8 +123,10 @@ $(function () {
 		var height = $(this).data('height');
 
 		if ($(this).attr('id') === 'device-custom') {
-			width = parseInt($('#width').val()) || '100%';
-			height = parseInt($('#height').val()) || '100%';
+			$width.focus();
+
+			width = parseInt($width.val()) || '100%';
+			height = parseInt($height.val()) || '100%';
 		}
 
 		resize(width, height);
@@ -141,7 +142,7 @@ $(function () {
 		.triggerHandler('change');
 
 
-	$('#width, #height').on('change', function() {
+	$width.add($height).on('change', function() {
 		$device.filter('#device-custom')
 			.prop('checked', true)
 			.triggerHandler('change');
