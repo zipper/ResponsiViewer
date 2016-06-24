@@ -1,0 +1,25 @@
+{
+	"name": "ResponsiViewer",
+	"description": "foo",
+	"version": "1.0.0",
+	"main": "dist/index.html",
+	"authors": [ "Radek Šerý <radek.sery@gmail.com>" ],
+	"homepage": "https://github.com/zipper/ResponsiViewer",
+	"license": "MIT",
+	"keywords": ["responsive", "tablet", "phone", "android", "ipad", "iphone"],
+	"devDependencies": {
+		"jquery": "~3.0.0"
+	},
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"demo",
+		"libs",
+		"src",
+		"test",
+		"*.md",
+		"Gruntfile.js",
+		"*.json"
+	]
+}
