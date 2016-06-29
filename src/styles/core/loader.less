@@ -1,0 +1,105 @@
+@svg-radius: 50;
+@stroke-width: 4;
+@radius: @svg-radius - @stroke-width / 2;
+@diameter: @radius * 2;
+@pi: 3.14159265359;
+@circumference: @pi * @diameter;
+@revolution: 2000ms;
+@color-steps: 4;
+
+#loader {
+	position:fixed; top:0; left:0; right:0; bottom:0; background:#fff; z-index:3;
+
+	.svg {
+		position:absolute; top:50%; left:50%;
+		margin:-200px 0 0 -100px;
+		display:block;
+		.animation(svg-rotate @revolution * @color-steps linear infinite)
+	}
+
+	circle {
+		fill: transparent;
+		stroke: @color-green; // overridden in animation
+		stroke-width: @stroke-width;
+		stroke-linecap: round;
+		stroke-dasharray: 0, @circumference;
+		@stroke-dur:@revolution * @color-steps;
+		.animation(~'stroke-dash @{revolution} linear infinite, stroke-width @{revolution} linear infinite, stroke-color @{stroke-dur} steps(@{color-steps}) infinite');
+	}
+
+	span {
+		position:absolute; top:50%; left:50%; width:200px; margin:0 0 0 -87px; font-size:24px; font-weight:bold; color:#ddd; text-align:center;
+	}
+}
+
+// slowly rotating the whole svg
+@-webkit-keyframes svg-rotate {
+	to { transform: rotate(360deg); }
+}
+
+// animating the stroke width
+@-webkit-keyframes stroke-width {
+	// fade-ish feels
+	0%, 100% { stroke-width: 0; }
+	// throttle til circle is almost complete
+	40%, 60% { stroke-width: @stroke-width / 2; }
+	// pump it up
+	50%      { stroke-width: @stroke-width; }
+}
+
+// offsetting and lengthening the stroke dash
+@-webkit-keyframes stroke-dash {
+	0%   { // draw circle
+		stroke-dasharray: 0, @circumference;
+		stroke-dashoffset: 0;
+	}
+	50% { // complete circle
+		stroke-dasharray: @circumference, 0;
+		stroke-dashoffset: 0;
+	}
+	100% { // undraw circle
+		stroke-dasharray: @circumference, @circumference;
+		stroke-dashoffset: -@circumference;
+	}
+}
+
+// stepped color animation
+@-webkit-keyframes stroke-color {
+	from { stroke: @color-blue; }
+}
+
+// slowly rotating the whole svg
+@keyframes svg-rotate {
+	to { transform: rotate(360deg); }
+}
+
+// animating the stroke width
+@keyframes stroke-width {
+	// fade-ish feels
+	0%, 100% { stroke-width: 0; }
+	// throttle til circle is almost complete
+	40%, 60% { stroke-width: @stroke-width / 2; }
+	// pump it up
+	50%      { stroke-width: @stroke-width; }
+}
+
+// offsetting and lengthening the stroke dash
+@keyframes stroke-dash {
+	0%   { // draw circle
+		stroke-dasharray: 0, @circumference;
+		stroke-dashoffset: 0;
+	}
+	50% { // complete circle
+		stroke-dasharray: @circumference, 0;
+		stroke-dashoffset: 0;
+	}
+	100% { // undraw circle
+		stroke-dasharray: @circumference, @circumference;
+		stroke-dashoffset: -@circumference;
+	}
+}
+
+// stepped color animation
+@keyframes stroke-color {
+	from { stroke: @color-blue; }
+}

@@ -52,8 +52,8 @@ module.exports = function(grunt) {
 					cssmin: true,
 					uglify: true
 				},
-				src: 'src/index.html',
-				dest: 'dist/index.html'
+				src: 'src/responsiviewer.html',
+				dest: 'dist/responsiviewer.html'
 			}
 		},
 		watch: {

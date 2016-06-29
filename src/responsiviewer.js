@@ -4,6 +4,7 @@ var ResponsiViewer = {
 	},
 	files: [
 		// add your files here
-		'./demo.html'
+		{ name: 'Index', url: './index.html' },
+		{ name: 'Demo page', url: './demo.html' }
 	]
 };

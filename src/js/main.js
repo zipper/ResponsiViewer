@@ -1,4 +1,149 @@
+var iframeHistory = function(iframe, select) {
+	this.$iframe = $(iframe);
+	this.$select = $(select);
+	this.firstLoad = true;
+	this.popstateLoad = false;
+
+	this.historySupported =  window.history && history.pushState && window.history.replaceState && !navigator.userAgent.match(/((iPod|iPhone|iPad).+\bOS\s+[1-4]|WebApps\/.+CFNetwork)/);
+
+	var that = this;
+
+	this.$iframe.on('load', function(e) {
+		that.load.call(that, e);
+	});
+
+
+	this.$select
+		.on('change init', function(e) {
+			$newIframe = that.$iframe.clone(true);
+			$newIframe.attr('src', $(this).val());
+
+			that.$iframe.replaceWith($newIframe);
+			that.$iframe = $newIframe;
+		})
+		.triggerHandler('init');
+
+	$(window).on('popstate', function(e) {
+		that.popstate.call(that, e);
+	})
+
+};
+iframeHistory.prototype.load = function(e, el) {
+	// TODO: do magic with links inside the iframe itself
+
+	var title = this.$iframe[0].contentDocument.title;
+
+	if (title) {
+		document.title = title = 'ResponsiViewer | ' + title;
+
+		if (this.historySupported) {
+			var href = window.location.href.split('?')[0];
+			var fileName = this.$iframe.attr('src');
+			href += "?page=" + encodeURI(fileName);
+
+			state = {
+				ResponsiViewer: true,
+				title: title,
+				url: href,
+				fileName: fileName
+			};
+
+			if (! this.popstateLoad) {
+				if (this.firstLoad) {
+					this.firstLoad = false;
+					window.history.replaceState(state, title, href);
+				}
+				else {
+					window.history.pushState(state, title, href);
+				}
+			}
+			else {
+				this.popstateLoad = false;
+			}
+		}
+	}
+};
+iframeHistory.prototype.popstate = function(e) {
+	var state = e.originalEvent.state;
+
+	if (state && state.ResponsiViewer) {
+		this.popstateLoad = true;
+
+		this.$select
+			.val(state.fileName)
+			.triggerHandler('change');
+	}
+};
+
 $(function () {
+	$('#loader').fadeOut(function() {
+		$(this).remove();
+	});
+
+	/**********************/
+	/** IFRAME src stuff **/
+
+	// Init
+	var $webpreview = $('#webpreview');
+	var $select = $('#iframe-url');
+
+	if (ResponsiViewer === 'undefined' || typeof ResponsiViewer.files !== 'object' || ResponsiViewer.files.length === 'undefined' || ResponsiViewer.files.length === 0) {
+		throw Error('Files names need to be set up in responsiviewer.js!');
+	}
+	else {
+		var l = ResponsiViewer.files.length;
+		var opt = "";
+
+		for(var i = 0; i < l; i++) {
+			opt += "<option value=" + ResponsiViewer.files[i].url + ">" + ResponsiViewer.files[i].name + "</option>";
+		}
+		$select
+			.empty()
+			.append($(opt));
+
+		// TODO: set default selected option from url
+	}
+
+	var iframeWithHistory = new iframeHistory('#webpreview > iframe', '#iframe-url');
+
+
+	/**********************/
+	/** Fullscreen stuff **/
+	var $fullscreen = $('#ResponsiViewer');
+	var pfx = ["webkit", "moz", "ms", "o", ""];
+	function RunPrefixMethod(obj, method) {
+		var p = 0, m, t;
+		while (p < pfx.length && !obj[m]) {
+			m = method;
+			if (pfx[p] == "") {
+				m = m.substr(0,1).toLowerCase() + m.substr(1);
+			}
+			m = pfx[p] + m;
+			t = typeof obj[m];
+			if (t != "undefined") {
+				pfx = [pfx[p]];
+				return (t == "function" ? obj[m]() : obj[m]);
+			}
+			p++;
+		}
+	}
+
+	$('#toggle-fullscreen').on('click', function(e) {
+		e.preventDefault();
+
+		if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
+			RunPrefixMethod(document, "CancelFullScreen");
+		}
+		else {
+			RunPrefixMethod($fullscreen[0], "RequestFullScreen");
+		}
+
+		// TODO: recalculate iframe dimenstions
+	});
+
+	/********************/
+	/** Resizing stuff **/
+
 	/**
 	 * Resize iframe
 	 * @param width
@@ -18,7 +163,7 @@ $(function () {
 
 		setZoom(params.zoom);
 
-		$iframe.css({
+		iframeWithHistory.$iframe.css({
 			'width': params.width,
 			'height': params.height
 		});
@@ -64,7 +209,7 @@ $(function () {
 	 * @param zoom
 	 */
 	function setZoom(zoom) {
-		$iframe.css({
+		iframeWithHistory.$iframe.css({
 			'-webkit-transform': 'scale(' + zoom + ')',
 			'-moz-transform': 'scale(' + zoom + ')',
 			'-ms-transform': 'scale(' + zoom + ')',
@@ -106,9 +251,6 @@ $(function () {
 
 
 	// EVENT HANDLERS
-	var $webpreview = $('#webpreview');
-	var $iframe = $webpreview.find('> iframe');
-
 	var $toolbar = $('#toolbar');
 	var $device = $toolbar.find(':radio');
 
@@ -147,4 +289,7 @@ $(function () {
 			.prop('checked', true)
 			.triggerHandler('change');
 	});
+
+	// TODO: on window resize, recalculate iframe dimensions
+
 });
