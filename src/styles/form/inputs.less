@@ -4,12 +4,12 @@
 }
 
 /* INPUT */
-.inp-text {
+input[type="number"], select {
 	.transition(border-color 300ms ease);
-	display:inline-block; width:4em; height:30px; box-shadow:none; padding:0 7px; margin:0; background:#fff; background-clip:padding-box; border:1px solid #999; border-radius:2px; outline:none; font-size:16px; color:@color-default; line-height:@line-height;
+	display:inline-block; height:30px; box-shadow:none; padding:0 7px; margin:0; background:#fff; background-clip:padding-box; border:1px solid #999; border-radius:2px; outline:none; font-size:16px; color:@color-default; line-height:@line-height;
 
 	&, input[type="search"]& { .box-sizing(); }
 	&:invalid { box-shadow:none; }
 	&:focus   { border-color:#727272; outline:none; }
-
 }
+

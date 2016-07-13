@@ -1,20 +1,22 @@
 /**
- * Allows to change iframe's src using select with custom browser history state
+ * Changes iframe url and updates parent page title and url based on select value
  * @constructor
  * @param iframe
  * @param select
+ * @param titlePrefix
+ *
+ * TODO: reload causes history loss
  */
-var iframeHistory = function(iframe, select) {
+var iframeHistory = function(iframe, select, titlePrefix) {
 	this.$iframe = $(iframe);
 	this.$select = $(select);
+
+	this.titlePrefix = titlePrefix;
 
 	var pathname = window.location.pathname;
 	this.url = window.location.protocol + "//" + window.location.host + pathname.substring(0, pathname.lastIndexOf("/") + 1);
 
-	this.firstLoad = true;
 	this.popstateLoad = false;
-	this.selectLoad = false;
-
 	this.historySupported =  window.history && history.pushState && window.history.replaceState && !navigator.userAgent.match(/((iPod|iPhone|iPad).+\bOS\s+[1-4]|WebApps\/.+CFNetwork)/);
 
 	var that = this;
@@ -42,15 +44,17 @@ var iframeHistory = function(iframe, select) {
  * @param el
  */
 iframeHistory.prototype.selectChange = function(e, el) {
-	if (e.type === 'change') {
-		this.selectLoad = true;
+	if (e.type === 'init') {
+		$newIframe = this.$iframe.clone(true);
+		$newIframe.attr('src', $(el).val());
+
+		this.$iframe.replaceWith($newIframe);
+		this.$iframe = $newIframe;
+	}
+	else {
+		this.$iframe.attr('src', $(el).val());
 	}
 
-	$newIframe = this.$iframe.clone(true);
-	$newIframe.attr('src', $(el).val());
-
-	this.$iframe.replaceWith($newIframe);
-	this.$iframe = $newIframe;
 };
 
 /**
@@ -58,11 +62,10 @@ iframeHistory.prototype.selectChange = function(e, el) {
  * @param e
  */
 iframeHistory.prototype.load = function(e) {
-	console.log('iframe load');
 	var title = this.$iframe[0].contentDocument.title;
 
 	if (title) {
-		document.title = title = 'ResponsiViewer | ' + title;
+		document.title = title = (this.titlePrefix ? this.titlePrefix : '') + title;
 
 		if (this.historySupported) {
 			var href = window.location.href.split('?')[0];
@@ -70,7 +73,7 @@ iframeHistory.prototype.load = function(e) {
 
 			var fileName = url.split(this.url);
 			if (fileName[1]) {
-				fileName = fileName[1]
+				fileName = fileName[1];
 			}
 			else {
 				fileName = url; // if somehow absolute url is used (same origin policy?)
@@ -79,31 +82,20 @@ iframeHistory.prototype.load = function(e) {
 			href += "?page=" + encodeURI(fileName);
 
 			state = {
-				ResponsiViewer: true,
+				iframeHistory: true,
 				title: title,
 				url: href,
 				fileName: fileName
 			};
 
 			if (! this.popstateLoad) {
-				// TODO: click on anchor inside iframe should remove the iframe and reload it again and push custom state; replace state can be used only in first load, because removing iframe removes the history
-				// TODO: better way, let the iframe load and call only replaceState instead of pushState
-				if (this.firstLoad || ! this.selectLoad) {
-					this.firstLoad = false;
-					window.history.replaceState(state, title, href);
-				}
-				else {
-					window.history.pushState(state, title, href);
-				}
-				this.selectLoad = false;
+				window.history.replaceState(state, title, href);
 			}
 			else {
-				this.popstateLoad = false;
+				this.popstateLoad = false; // reset to false
 			}
 
-			if (this.popstateLoad || ! this.selectLoad) {
-				this.setSelectValue(fileName);
-			}
+			this.setSelectValue(fileName);
 		}
 	}
 };
@@ -133,30 +125,10 @@ iframeHistory.prototype.setSelectValue = function(value) {
 iframeHistory.prototype.popstate = function(e) {
 	var state = e.originalEvent.state;
 
-	if (state && state.ResponsiViewer) {
+	if (state && state.iframeHistory) {
 		this.popstateLoad = true;
 
 		this.setSelectValue(state.fileName);
 		this.$select.triggerHandler('change');
 	}
-};
-
-/**
- * Sets parameter into document URL
- * @param parameter
- * @param value
- */
-iframeHistory.prototype.setUrlParameter = function(parameter, value) {
-
-};
-
-/**
- * Reads parameter from document URL (not the iframe url)
- * @param parameter
- * @returns {*}
- */
-iframeHistory.prototype.getUrlParameter = function(parameter) {
-	var value;
-
-	return value;
 };

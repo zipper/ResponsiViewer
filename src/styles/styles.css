@@ -765,13 +765,13 @@ textarea:-ms-input-placeholder {
 }
 /* PLACEHOLDER */
 /* INPUT */
-.inp-text {
+input[type="number"],
+select {
   -webkit-transition: border-color 300ms ease;
   -moz-transition: border-color 300ms ease;
   -o-transition: border-color 300ms ease;
   transition: border-color 300ms ease;
   display: inline-block;
-  width: 4em;
   height: 30px;
   box-shadow: none;
   padding: 0 7px;
@@ -785,17 +785,21 @@ textarea:-ms-input-placeholder {
   color: #666;
   line-height: 1.625;
 }
-.inp-text,
-input[type="search"].inp-text {
+input[type="number"],
+select,
+input[type="search"]input[type="number"],
+input[type="search"]select {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
 }
-.inp-text:invalid {
+input[type="number"]:invalid,
+select:invalid {
   box-shadow: none;
 }
-.inp-text:focus {
+input[type="number"]:focus,
+select:focus {
   border-color: #727272;
   outline: none;
 }
@@ -841,10 +845,31 @@ label,
 }
 #toolbar p {
   display: inline-block;
+  margin: 0;
 }
+#toolbar label,
 #toolbar strong {
   color: #666;
   font-weight: bold;
+}
+#toolbar select {
+  width: 8em;
+}
+#toolbar .sep {
+  position: relative;
+  margin-left: .5em;
+  padding-left: .84em;
+}
+#toolbar .sep:before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: block;
+  width: 0;
+  height: 32px;
+  margin-top: -16px;
+  border-left: 1px solid #ddd;
+  content: "";
 }
 #toolbar .toggle {
   display: inline-block;
@@ -871,19 +896,7 @@ label,
   line-height: 1.5;
 }
 #toolbar .toggle li.sep {
-  margin-left: .5em;
-  padding-left: 1em;
-}
-#toolbar .toggle li.sep:before {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  display: block;
-  width: 0;
-  height: 32px;
-  margin-top: -16px;
-  border-left: 1px solid #ddd;
-  content: "";
+  padding-left: .84em;
 }
 #toolbar .toggle [type="radio"] {
   position: absolute;
@@ -894,6 +907,9 @@ label,
   padding: 0;
   clip: rect(0 0 0 0);
   overflow: hidden;
+}
+#toolbar .toggle [type="number"] {
+  width: 2.9em;
 }
 #toolbar .toggle label[class*="ico-"] {
   position: relative;

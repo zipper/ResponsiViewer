@@ -1,6 +1,4 @@
 $(function () {
-	// TODO: repair browsers history when sequence index -> unknown -> index occurs
-
 	/**********************/
 	/** IFRAME src stuff **/
 
@@ -25,7 +23,9 @@ $(function () {
 		// TODO: set default selected option from url
 	}
 
-	var iframeWithHistory = new iframeHistory('#webpreview > iframe', '#iframe-url');
+	var titlePrefix = ResponsiViewer.options && ResponsiViewer.options.titlePrefix || '';
+
+	var iframeWithHistory = new iframeHistory('#webpreview > iframe', '#iframe-url', titlePrefix);
 
 
 	/**********************/

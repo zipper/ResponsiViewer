@@ -1,6 +1,6 @@
 var ResponsiViewer = {
 	options: {
-		// nothing yet
+		titlePrefix: 'RV | ' // string used to prefix title from iframe page
 	},
 	files: [
 		// add your files here; path has to be relative to responsiviewer.html

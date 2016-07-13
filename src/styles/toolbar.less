@@ -1,20 +1,25 @@
 #toolbar {
 	position:absolute; top:0; left:0; right:0; z-index:2; height:50px; background:#fff; box-shadow:0 0 5px rgba(0,0,0,.3); text-align:center;
 
-	p { display:inline-block; }
+	p { display:inline-block; margin:0; }
 
-	strong { color:#666; font-weight:bold; }
+	label, strong { color:#666; font-weight:bold; }
+
+	select { width:8em; }
+
+	.sep {
+		position:relative; margin-left:.5em; padding-left:.84em;
+		&:before { position:absolute; top:50%; left:0; display:block; width:0; height:32px; margin-top:-16px; border-left:1px solid #ddd; content:""; }
+	}
 	.toggle {
 		display:inline-block; line-height:50px; white-space:nowrap;
 		.inline-block();
 
 		li { position:relative; bottom:2px; display:inline-block; padding:0 .5em; vertical-align:middle; line-height:1.5; }
-		li.sep {
-			margin-left:.5em; padding-left:1em;
-			&:before { position:absolute; top:50%; left:0; display:block; width:0; height:32px; margin-top:-16px; border-left:1px solid #ddd; content:""; }
-		}
+		li.sep { padding-left:.84em; }
 
 		[type="radio"] { position:absolute; width:0; height:0; border:0; margin:0; padding:0; clip:rect(0 0 0 0); overflow:hidden; }
+		[type="number"] { width:2.9em; }
 
 		label[class*="ico-"] {
 			position:relative; display:block; width:32px; height:32px;
@@ -34,3 +39,4 @@
 		[type="radio"]:checked + label { color:@color-blue; }
 	}
 }
+

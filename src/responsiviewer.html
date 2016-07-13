@@ -34,33 +34,33 @@
 				</select>
 			</p>
 
-			<p><strong>Select device</strong></p>
+			<p class="sep"><strong>Device</strong></p>
 			<ul class="reset toggle">
-				<li>
+				<li class="device-desktop">
 					<input type="radio" name="device" id="device-desktop" data-width="100%" data-height="100%">
 					<label for="device-desktop" class="ico-desktop"><span>Desktop (fullscreen)</span></label>
 				</li>
-				<li>
+				<li class="device-laptop">
 					<input type="radio" name="device" id="device-laptop" data-width="1366" data-height="768">
 					<label for="device-laptop" class="ico-laptop"><span>Small laptop 1366&times;768</span></label>
 				</li>
-				<li>
-					<input type="radio" name="device" id="device-table" data-width="768" data-height="1024">
-					<label for="device-table" class="ico-tablet"><span>Tablet 768&times;1024 (portrait)</span></label>
+				<li class="device-tablet">
+					<input type="radio" name="device" id="device-tablet" data-width="768" data-height="1024">
+					<label for="device-tablet" class="ico-tablet"><span>Tablet 768&times;1024 (portrait)</span></label>
 				</li>
-				<li>
-					<input type="radio" name="device" id="device-table-landscape" data-width="1024" data-height="768">
-					<label for="device-table-landscape" class="ico-tablet-landscape"><span>Tablet 1024&times;768 (landscape)</span></label>
+				<li class="device-tablet-landscape">
+					<input type="radio" name="device" id="device-tablet-landscape" data-width="1024" data-height="768">
+					<label for="device-tablet-landscape" class="ico-tablet-landscape"><span>Tablet 1024&times;768 (landscape)</span></label>
 				</li>
-				<li>
+				<li class="device-phone">
 					<input type="radio" name="device" id="device-phone" data-width="320" data-height="480">
 					<label for="device-phone" class="ico-phone"><span>Phone 320&times;480 (portrait)</span></label>
 				</li>
-				<li>
+				<li class="device-phone-landscape">
 					<input type="radio" name="device" id="device-phone-landscape" data-width="480" data-height="320">
 					<label for="device-phone-landscape" class="ico-phone-landscape"><span>Phone 480&times;320 (landscape)</span></label>
 				</li>
-				<li class="sep custom-device">
+				<li class="sep device-custom">
 					<input type="radio" name="device" id="device-custom">
 					<label for="device-custom">Custom size:</label>
 					<input type="number" name="width" id="width" class="inp-text" placeholder="Width">
