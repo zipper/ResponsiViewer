@@ -1,84 +1,5 @@
-var iframeHistory = function(iframe, select) {
-	this.$iframe = $(iframe);
-	this.$select = $(select);
-	this.firstLoad = true;
-	this.popstateLoad = false;
-
-	this.historySupported =  window.history && history.pushState && window.history.replaceState && !navigator.userAgent.match(/((iPod|iPhone|iPad).+\bOS\s+[1-4]|WebApps\/.+CFNetwork)/);
-
-	var that = this;
-
-	this.$iframe.on('load', function(e) {
-		that.load.call(that, e);
-	});
-
-
-	this.$select
-		.on('change init', function(e) {
-			$newIframe = that.$iframe.clone(true);
-			$newIframe.attr('src', $(this).val());
-
-			that.$iframe.replaceWith($newIframe);
-			that.$iframe = $newIframe;
-		})
-		.triggerHandler('init');
-
-	$(window).on('popstate', function(e) {
-		that.popstate.call(that, e);
-	})
-
-};
-iframeHistory.prototype.load = function(e, el) {
-	// TODO: do magic with links inside the iframe itself
-
-	var title = this.$iframe[0].contentDocument.title;
-
-	if (title) {
-		document.title = title = 'ResponsiViewer | ' + title;
-
-		if (this.historySupported) {
-			var href = window.location.href.split('?')[0];
-			var fileName = this.$iframe.attr('src');
-			href += "?page=" + encodeURI(fileName);
-
-			state = {
-				ResponsiViewer: true,
-				title: title,
-				url: href,
-				fileName: fileName
-			};
-
-			if (! this.popstateLoad) {
-				if (this.firstLoad) {
-					this.firstLoad = false;
-					window.history.replaceState(state, title, href);
-				}
-				else {
-					window.history.pushState(state, title, href);
-				}
-			}
-			else {
-				this.popstateLoad = false;
-			}
-		}
-	}
-};
-iframeHistory.prototype.popstate = function(e) {
-	var state = e.originalEvent.state;
-
-	if (state && state.ResponsiViewer) {
-		this.popstateLoad = true;
-
-		this.$select
-			.val(state.fileName)
-			.triggerHandler('change');
-	}
-};
-
 $(function () {
-	$('#loader').fadeOut(function() {
-		$(this).remove();
-	});
+	// TODO: repair browsers history when sequence index -> unknown -> index occurs
 
 	/**********************/
 	/** IFRAME src stuff **/
@@ -292,4 +213,7 @@ $(function () {
 
 	// TODO: on window resize, recalculate iframe dimensions
 
+	$('#loader').fadeOut(function() {
+		$(this).remove();
+	});
 });
