@@ -703,10 +703,10 @@ th {
   margin: 0 0 -1px;
   bottom: 21.875%;
   display: block;
-  -webkit-transition: width 150ms linear, height 150ms linear;
-  -moz-transition: width 150ms linear, height 150ms linear;
-  -o-transition: width 150ms linear, height 150ms linear;
-  transition: width 150ms linear, height 150ms linear;
+  -webkit-transition: width 150ms linear, height 150ms linear, color 300ms ease, border-color 300ms ease;
+  -moz-transition: width 150ms linear, height 150ms linear, color 300ms ease, border-color 300ms ease;
+  -o-transition: width 150ms linear, height 150ms linear, color 300ms ease, border-color 300ms ease;
+  transition: width 150ms linear, height 150ms linear, color 300ms ease, border-color 300ms ease;
 }
 .ico-fullscreen:before {
   width: 100%;
@@ -748,6 +748,11 @@ th {
 .ico-fullscreen:hover:before {
   width: 50%;
   height: 28.125%;
+}
+.ico-fullscreen:hover:before,
+.ico-fullscreen:hover:after {
+  border-color: #5c76bf;
+  color: #5c76bf;
 }
 .ico-fullscreen.fullscreen-active:hover:after,
 .ico-fullscreen.fullscreen-active:before {
@@ -865,10 +870,10 @@ textarea:-ms-input-placeholder {
 /* INPUT */
 input[type="number"],
 select {
-  -webkit-transition: border-color 300ms ease;
-  -moz-transition: border-color 300ms ease;
-  -o-transition: border-color 300ms ease;
-  transition: border-color 300ms ease;
+  -webkit-transition: border-color 300ms ease, box-shadow 300ms ease;
+  -moz-transition: border-color 300ms ease, box-shadow 300ms ease;
+  -o-transition: border-color 300ms ease, box-shadow 300ms ease;
+  transition: border-color 300ms ease, box-shadow 300ms ease;
   display: inline-block;
   height: 30px;
   padding: 0 7px;
@@ -893,7 +898,8 @@ select:invalid {
 }
 input[type="number"]:focus,
 select:focus {
-  border-color: #727272;
+  border-color: #5c76bf;
+  box-shadow: 0 0 2px rgba(92, 118, 191, 0.5);
   outline: none;
 }
 select {
@@ -911,7 +917,7 @@ select {
   left: -9999px;
   /* □ */
   /* ✔ */
-  /* accessibility */
+  /* accessibility & hover */
   /* disabled □ */
   /* disabled ✔ */
 }
@@ -940,10 +946,10 @@ select {
   border: 1px solid #999;
   border-radius: 2px;
   content: '';
-  -webkit-transition: background-color 300ms ease, border-color 300ms ease;
-  -moz-transition: background-color 300ms ease, border-color 300ms ease;
-  -o-transition: background-color 300ms ease, border-color 300ms ease;
-  transition: background-color 300ms ease, border-color 300ms ease;
+  -webkit-transition: background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
+  -moz-transition: background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
+  -o-transition: background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
+  transition: background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
 }
 [type="checkbox"]:not(:checked) + label:after,
 [type="checkbox"]:checked + label:after {
@@ -981,8 +987,11 @@ select {
   transition: transform 300ms ease, opacity 300ms ease;
 }
 [type="checkbox"]:not(:checked):focus + label:before,
-[type="checkbox"]:checked:focus + label:before {
+[type="checkbox"]:checked:focus + label:before,
+[type="checkbox"]:not(:checked) + label:hover:before,
+[type="checkbox"]:checked + label:hover:before {
   border-color: #5c76bf;
+  box-shadow: 0 0 2px rgba(92, 118, 191, 0.5);
 }
 [type="checkbox"]:not(:checked):disabled + label:before,
 [type="checkbox"]:checked:disabled + label:before {
@@ -1009,10 +1018,6 @@ select {
   -ms-transform: scale(1);
   -o-transform: scale(1);
   transform: scale(1);
-}
-/* hover style just for information */
-label:hover:before {
-  border-color: #5c76bf !important;
 }
 /* FORM */
 form p.reset {
@@ -1123,7 +1128,7 @@ label,
   overflow: hidden;
 }
 #toolbar .toggle [type="number"] {
-  width: 2.9em;
+  width: 3.15em;
 }
 #toolbar .toggle label[class*="ico-"] {
   position: relative;

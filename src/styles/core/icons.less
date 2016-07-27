@@ -39,13 +39,17 @@
 
 	position:relative; bottom:2px; display:inline-block; padding:@size 0 0 @size; width:0; height:0; vertical-align:middle;
 
-	&:before, &:after { position:absolute; left:0; margin:0 0 -1px; bottom:(100% - 100% * @ratio) / 2; display:block;  .transition(~'width @{duration} linear, height @{duration} linear'); }
+	&:before, &:after { position:absolute; left:0; margin:0 0 -1px; bottom:(100% - 100% * @ratio) / 2; display:block;  .transition(~'width @{duration} linear, height @{duration} linear, color 300ms ease, border-color 300ms ease'); }
 	&:before { width:100%; height:100%*@ratio; border:1px dotted #999; content:""; }
 	&:after { .ico-font; width:50%; height:50%*@ratio; border:1px solid #666; content:"f"; text-align:right; font-size:9/32*@size; overflow:hidden; }
 
 	&.fullscreen-active:after,
 	&:hover:after { width:100%; height:100%*@ratio; }
 	&:hover:before { width:50%; height:50%*@ratio; }
+
+	&:hover {
+		&:before, &:after { border-color:@color-blue; color:@color-blue; }
+	}
 
 	&.fullscreen-active {
 		&:hover:after,

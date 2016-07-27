@@ -183,12 +183,14 @@ $(function () {
 	var scrollbarWidth = getScrollBarWidth();
 	var preserveHeight = true;
 
-	$device.on('change', function() {
+	$device.on('change', function(e) {
 		var width = $(this).data('width');
 		var height = $(this).data('height');
 
 		if ($(this).attr('id') === 'device-custom') {
-			$width.focus();
+			if (! e.isTrigger) {
+				$width.focus();
+			}
 
 			width = parseInt($width.val()) || '100%';
 			height = parseInt($height.val()) || '100%';

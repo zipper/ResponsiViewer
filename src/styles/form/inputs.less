@@ -5,11 +5,11 @@
 
 /* INPUT */
 input[type="number"], select {
-	.transition(border-color 300ms ease);
+	.transition(~'border-color 300ms ease, box-shadow 300ms ease');
 	display:inline-block; height:30px; padding:0 7px; margin:0; .box-sizing(content-box); box-shadow:none; background:#fff; background-clip:padding-box; border:1px solid #999; border-radius:2px; outline:none; font-size:16px; color:@color-default; line-height:@line-height;
 
 	&:invalid { box-shadow:none; }
-	&:focus   { border-color:#727272; outline:none; }
+	&:focus   { border-color:@color-blue; box-shadow:0 0 2px fadeout(@color-blue, 50%); outline:none; }
 }
 
 select {

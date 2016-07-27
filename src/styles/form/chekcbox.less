@@ -22,7 +22,7 @@
 		/* □ */
 		& + label:before {
 			position:absolute; top:2px; left:0; width:20px; height:20px; .box-sizing(); background:#fff; border:1px solid @border-color; border-radius:2px; content: '';
-			.transition(~'background-color 300ms ease, border-color 300ms ease');
+			.transition(~'background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease');
 		}
 
 		/* ✔ */
@@ -31,8 +31,9 @@
 			.transition-transform(~'300ms ease, opacity 300ms ease');
 		}
 
-		/* accessibility */
-		&:focus + label:before { border-color:@hover-border-color; }
+		/* accessibility & hover */
+		&:focus + label:before,
+		& + label:hover:before { border-color:@hover-border-color; box-shadow:0 0 2px fadeout(@hover-border-color, 50%); }
 
 		/* disabled □ */
 		&:disabled + label:before { background:@disabled-bg-color; border-color:@disabled-border-color !important; }
@@ -45,7 +46,4 @@
 	&:not(:checked) + label:after { opacity: 0; .transform(~'scale(0)'); }
 	&:checked + label:after { opacity: 1; .transform(~'scale(1)'); }
 }
-
-/* hover style just for information */
-label:hover:before { border-color:@hover-border-color !important; }
 
