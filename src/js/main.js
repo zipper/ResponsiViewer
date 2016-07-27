@@ -54,9 +54,11 @@ $(function () {
 
 		if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
 			RunPrefixMethod(document, "CancelFullScreen");
+			$(this).removeClass('fullscreen-active');
 		}
 		else {
 			RunPrefixMethod($fullscreen[0], "RequestFullScreen");
+			$(this).addClass('fullscreen-active');
 		}
 
 		// TODO: recalculate iframe dimenstions

@@ -5,7 +5,7 @@
  * @param select
  * @param titlePrefix
  *
- * TODO: reload causes history loss
+ * TODO: reload causes history loss, any ideas?
  */
 var iframeHistory = function(iframe, select, titlePrefix) {
 	this.$iframe = $(iframe);

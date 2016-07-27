@@ -29,3 +29,29 @@
 
 .ico-phone-landscape,
 .ico-tablet-landscape { &:before { .transform(~'rotate(90deg) scaleX(-1)'); }}
+
+.ico-tick      { &:before { .ico-font; content:"e"; }}
+
+.ico-fullscreen {
+	@size:32px;
+	@ratio:9/16;
+	@duration:150ms;
+
+	position:relative; bottom:2px; display:inline-block; padding:@size 0 0 @size; width:0; height:0; vertical-align:middle;
+
+	&:before, &:after { position:absolute; left:0; margin:0 0 -1px; bottom:(100% - 100% * @ratio) / 2; display:block;  .transition(~'width @{duration} linear, height @{duration} linear'); }
+	&:before { width:100%; height:100%*@ratio; border:1px dotted #999; content:""; }
+	&:after { .ico-font; width:50%; height:50%*@ratio; border:1px solid #666; content:"f"; text-align:right; font-size:9/32*@size; overflow:hidden; }
+
+	&.fullscreen-active:after,
+	&:hover:after { width:100%; height:100%*@ratio; }
+	&:hover:before { width:50%; height:50%*@ratio; }
+
+	&.fullscreen-active {
+		&:hover:after,
+		&:before { width:50%; height:50%*@ratio; }
+		&:hover:before { width:100%; height:100%*@ratio; }
+		&:after { content:"g"; }
+	}
+}
+

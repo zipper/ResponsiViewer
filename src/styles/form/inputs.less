@@ -6,10 +6,14 @@
 /* INPUT */
 input[type="number"], select {
 	.transition(border-color 300ms ease);
-	display:inline-block; height:30px; box-shadow:none; padding:0 7px; margin:0; background:#fff; background-clip:padding-box; border:1px solid #999; border-radius:2px; outline:none; font-size:16px; color:@color-default; line-height:@line-height;
+	display:inline-block; height:30px; padding:0 7px; margin:0; .box-sizing(content-box); box-shadow:none; background:#fff; background-clip:padding-box; border:1px solid #999; border-radius:2px; outline:none; font-size:16px; color:@color-default; line-height:@line-height;
 
-	&, input[type="search"]& { .box-sizing(); }
 	&:invalid { box-shadow:none; }
 	&:focus   { border-color:#727272; outline:none; }
 }
 
+select {
+	padding:0;
+}
+
+@import "chekcbox";
